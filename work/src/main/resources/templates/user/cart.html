@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments :: head">
+    <meta charset="UTF-8">
+    <title>Корзина</title>
+</head>
+<body class="container">
+<div th:include="fragments :: nav"></div>
+<h3>Корзина</h3>
+<div class="card-columns">
+    <div class="card-group">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <div th:each="product : ${cart_product}" th:include="fragments :: cart-item" class="col">
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<h3 th:text="'Итоговая цена: ' + ${price}"></h3>
+
+<div class="form-group row-col-cols-1 mt-2">
+<!--    <div class="col-sm-4">-->
+        <a href="/order/create" class="btn btn-outline-primary">Оформить заказ</a>
+<!--    </div>-->
+    <div th:replace="fragments :: btnURL (${'Продолжить покупки'},${'/product'})"></div>
+</div>
+
+<footer th:replace="fragments :: footer">
+    <div>FOOTER</div>
+</footer>
+
+</body>
+</html>

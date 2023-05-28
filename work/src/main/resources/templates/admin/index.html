@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments :: head">
+    <meta charset="UTF-8">
+    <title>Магазин</title>
+</head>
+<body class="container">
+<div th:include="fragments :: nav"></div>
+<h1 th:text="'Личный кабинет администратора ' + ${#authentication.principal.getPerson().getLogin()}"></h1>
+
+<div class="collapse show" id="collapseProduct">
+<table class="table table-bordered border-primary caption-top">
+    <caption>Список товаров</caption>
+    <thead class="table-light border-primary">
+    <tr>
+        <th></th>
+        <th>Наименование</th>
+        <th>Цена</th>
+        <th colspan="2">Действия</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <td colspan="5">
+            <a class="btn btn-outline-primary" href="admin/product/add">Добавить товар</a>
+        </td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <tr th:each="product : ${products}">
+        <td><img th:src="'/img/' + ${product.imageList[0].getFileName()}"  style="max-height: 80px;"
+                 th:alt="${product.getTitle()}"
+        ></td>
+        <td th:text="${product.getTitle()}"></td>
+        <td th:text="${product.getPrice()}"></td>
+        <td><a class="btn btn-outline-primary" th:href="@{/admin/product/edit/{id}(id=${product.getId()})}">Редактировать</a></td>
+        <td><a class="btn btn-outline-primary" th:href="@{/admin/product/delete/{id}(id=${product.getId()})}">Удалить</a></td>
+    </tr>
+    </tbody>
+</table>
+</div>
+<!--заказ-->
+<div class="collapse show" id="collapseOrder">
+<table class="table table-bordered border-primary caption-top">
+    <caption>Список заказов</caption>
+    <thead class="table-light border-primary">
+    <tr>
+        <th>Номер заказа</th>
+        <th>Дата</th>
+        <th>Описание</th>
+        <th>Цена</th>
+        <th>Статус</th>
+        <th>Действия</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <td colspan="6">
+            <form th:method="GET" th:action="@{/admin/order/search}">
+            <div class="form-group row mb-2">
+                <label for="search" class="col-auto col-form-label">Введите последние четыре цифры номера заказа:</label>
+                <div class="col-auto">
+                    <input class="form-control" id="search" name="search" maxlength="4" th:value="*{value_search}" placeholder="4 цифры">
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-outline-primary" type="submit">Найти</button>
+                </div>
+            </div>
+            </form>
+        </td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.getNumber()}"></td>
+        <td th:text="${order.getDateTime()}"></td>
+        <td th:text="${order.getProduct().getTitle()}"></td>
+        <td th:text="${order.getPrice()}"></td>
+        <td th:text="${order.getStatus()}"></td>
+        <td><a class="btn btn-outline-primary" th:href="@{/admin/order/edit/{number}(number=${order.getNumber()})}">Изменить</a></td>
+    </tr>
+    </tbody>
+</table>
+</div>
+<!--пользователь-->
+
+<div class="collapse show" id="collapsePerson">
+<table class="table table-bordered border-primary caption-top">
+    <caption>Список пользователей</caption>
+    <thead class="table-light border-primary">
+    <tr>
+        <th>Логин</th>
+        <th>Роль</th>
+        <th>Действия</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="person : ${persons}">
+        <td th:text="${person.getLogin()}"></td>
+        <td th:text="${person.getRole()}"></td>
+        <td><a class="btn btn-outline-primary" th:href="@{/admin/user/edit/{id}(id=${person.getId()})}">Изменить</a></td>
+    </tr>
+    </tbody>
+</table>
+</div>
+<footer th:replace="fragments :: footer">
+    <div>FOOTER</div>
+</footer>
+</body>
+</html>

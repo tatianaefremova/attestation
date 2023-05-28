@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments :: head">
+    <meta charset="UTF-8">
+    <title>Магазин</title>
+</head>
+<body class="container">
+<div th:include="fragments :: nav"></div>
+
+
+<div th:replace="fragments :: filter"></div>
+
+<div class="card-columns">
+    <div class="card-group">
+        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+            <div th:each="product : ${products}" th:include="fragments :: card" class="col">
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments :: footer">
+    <div>FOOTER</div>
+</footer>
+</body>
+</html>

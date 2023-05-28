@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<head th:replace="fragments :: head">
+    <head>
+        <meta charset="UTF-8">
+        <title>Добавление товара</title>
+    </head>
+<body class="container">
+<div th:include="fragments :: nav"></div>
+<h3>Добавление товара</h3>
+<form class="mt-5" th:method="POST" th:action="@{/admin/product/add}" th:object="${product}"
+      enctype="multipart/form-data">
+    <div class="form-group mb-2">
+        <label for="category" class="form-label">Категория: </label>
+        <select class="form-select" name="category" th:field="*{category}" id="category">
+            <div th:each="element : ${category}">
+                <option th:text="${element.getName()}" th:value="${element.getId()}">
+            </div>
+        </select>
+        <div style="color: red" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
+    </div>
+
+    <div class="form-group mb-2">
+        <label for="title" class="form-label">Наименование: </label>
+        <input class="form-control" type="text" placeholder="Наименование" th:field="*{title}"
+               id="title">
+        <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+    </div>
+
+    <div class="form-group mb-2">
+        <label for="description" class="form-label">Описание: </label>
+        <textarea class="form-control" placeholder="Описание" th:field="*{description}"
+                  id="description"></textarea>
+        <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+    </div>
+
+    <div class="form-group mb-2">
+        <label for="price" class="form-label">Цена: </label>
+        <input class="form-control" type="number" min="1" step="any" placeholder="Цена" th:field="*{price}"
+               id="price">
+        <div style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+    </div>
+
+    <div class="form-group mb-2">
+        <label for="warehouse" class="form-label">Склад: </label>
+        <input class="form-control" type="text" placeholder="Склад" th:field="*{warehouse}"
+               id="warehouse">
+        <div style="color: red" th:if="${#fields.hasErrors('warehouse')}" th:errors="*{warehouse}"></div>
+    </div>
+
+    <div class="form-group mb-2">
+        <label for="seller" class="form-label">Продавец: </label>
+        <input class="form-control" type="text" placeholder="Продавец" th:field="*{seller}"
+               id="seller">
+        <div style="color: red" th:if="${#fields.hasErrors('seller')}" th:errors="*{seller}"></div>
+    </div>
+
+    <div class="form-group mb-3">
+        <p class="alert alert-warning" role="alert">Вы можете добавить до 5 фотографий. Первая фотография не может быть
+            пустой т.к она будет являтся главной при выводе карточки товара</p>
+        <div class="form-file mb-2">
+            <input class="form-file-input" type="file" name="file_one" id="file_one">
+        </div>
+        <div class="form-file mb-2">
+            <input class="form-file-input" type="file" name="file_two" id="file_two">
+        </div>
+        <div class="form-file mb-2">
+            <input class="form-file-input" type="file" name="file_three" id="file_three">
+        </div>
+        <div class="form-file mb-2">
+            <input class="form-file-input" type="file" name="file_four" id="file_four">
+        </div>
+        <div class="form-file mb-2">
+            <input class="form-file-input" type="file" name="file_five" id="file_five">
+        </div>
+    </div>
+    <div class="form-group mb-2 pt-2 border-top">
+        <button class="btn btn-outline-primary" type="submit">Сохранить</button>
+    </div>
+</form>
+<footer th:replace="fragments :: footer">
+    <div>FOOTER</div>
+</footer>
+</body>
+</html>

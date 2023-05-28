@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments :: head">
+    <meta charset="UTF-8">
+    <title>Редактирование заказа</title>
+</head>
+<body class="container">
+<div th:include="fragments :: nav"></div>
+<h3>Редактирование заказа</h3>
+<form class="mt-5" th:method="POST" th:action="@{/admin/order/edit/{id}(id=${order[0].getNumber()})}"
+      th:object="${order}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <table class="table table-bordered border-primary caption-top">
+        <caption>Состав заказа</caption>
+        <thead>
+        <tr>
+            <th th:text="${order[0].getNumber()}">#</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <td>
+                <div class="form-group row">
+                    <label for="status" class="col-auto col-form-label">Статус:</label>
+                    <div class="col-auto">
+                    <select class="form-select" name="status" id="status">
+                        <option th:each="enum : ${T(com.example.bookshop.enumm.Status).values()}"
+                                th:text="${enum}"
+                                th:value="${enum}"
+                                th:selected="(${enum} == ${order[0].getStatus()})"
+                        >
+                        </option>
+                    </select>
+                    </div>
+                    <div class="col-auto">
+                    <button class="btn btn-outline-primary" type="submit">Сохранить</button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <tr th:each="elem : ${order}">
+            <td th:text="${elem.getProduct().getTitle()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+<footer th:replace="fragments :: footer">
+    <div>FOOTER</div>
+</footer>
+</body>
+</html>
